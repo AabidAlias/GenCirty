@@ -1,7 +1,6 @@
 /**
  * components/AuthModal.jsx
- * Fixed: validates server response before calling login() to prevent blank screen.
- * Added: 3 consent checkboxes for legal compliance.
+ * Updated: Gmail is now used as Reply-To only (sending via Brevo).
  */
 import { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -29,7 +28,7 @@ export default function AuthModal({ mode, onClose, onSwitchMode }) {
           password: data.password,
           orgName: data.orgName,
           senderEmail: data.senderEmail,
-          senderAppPassword: data.senderAppPassword,
+          senderAppPassword: data.senderAppPassword || "not-required",
           agreeTerms: !!data.agreeTerms,
           agreeData: !!data.agreeData,
           agreePassword: !!data.agreePassword,
@@ -40,9 +39,6 @@ export default function AuthModal({ mode, onClose, onSwitchMode }) {
         toast.success(`Welcome back, ${result.name}! 👋`);
       }
 
-      // ✅ KEY FIX: validate result before calling login
-      // This prevents the blank screen — if server returns unexpected data
-      // we throw an error instead of storing bad data in localStorage
       if (!result || !result.user_id || !result.token) {
         throw new Error("Server returned invalid data. Please try again.");
       }
@@ -140,10 +136,10 @@ export default function AuthModal({ mode, onClose, onSwitchMode }) {
               {/* Gmail sender */}
               <div className="border-t border-gray-100 pt-3">
                 <p className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">
-                  📧 Your Gmail Sender
+                  📧 Your Gmail Address
                 </p>
                 <div className="bg-amber-50 border border-amber-200 rounded-xl p-3 mb-3 text-xs text-amber-700 leading-relaxed">
-                  <strong>Why?</strong> Certificates are sent <strong>FROM your Gmail</strong> so recipients see your email, not ours.
+                  <strong>Why?</strong> Your Gmail is used as the <strong>Reply-To</strong> address — so recipients can reply directly to you.
                 </div>
               </div>
 
@@ -155,40 +151,6 @@ export default function AuthModal({ mode, onClose, onSwitchMode }) {
                   className={inp(errors.senderEmail)}
                 />
               </Field>
-
-              <Field
-                label={
-                  <span className="flex items-center gap-2">
-                    Gmail App Password
-                    <button
-                      type="button"
-                      onClick={() => setShowAppPwHelp(!showAppPwHelp)}
-                      className="text-blue-500 text-xs underline font-normal"
-                    >
-                      How to get it?
-                    </button>
-                  </span>
-                }
-                error={errors.senderAppPassword?.message}
-              >
-                <input
-                  type="password"
-                  {...register("senderAppPassword", { required: "App password is required" })}
-                  placeholder="16-character app password (no spaces)"
-                  className={inp(errors.senderAppPassword)}
-                />
-              </Field>
-
-              {showAppPwHelp && (
-                <div className="bg-blue-50 border border-blue-100 rounded-xl p-4 text-xs text-blue-700 space-y-1.5">
-                  <p className="font-bold mb-1">📋 Steps to get App Password:</p>
-                  <p>1. Go to <a href="https://myaccount.google.com/security" target="_blank" rel="noreferrer" className="underline font-medium">Google Account → Security</a></p>
-                  <p>2. Enable <strong>2-Step Verification</strong></p>
-                  <p>3. Search <strong>"App Passwords"</strong> in your Google Account</p>
-                  <p>4. Create one named <strong>GenCirty</strong></p>
-                  <p>5. Copy the 16-character code and paste above (remove spaces)</p>
-                </div>
-              )}
 
               {/* ── Consent Checkboxes ── */}
               <div className="border-t border-gray-100 pt-4 space-y-3">
@@ -220,7 +182,7 @@ export default function AuthModal({ mode, onClose, onSwitchMode }) {
                   fieldReg={register("agreePassword", { required: "Required to proceed" })}
                   error={errors.agreePassword?.message}
                 >
-                  I understand my Gmail App Password is stored securely and used <strong>only</strong> to send certificates on my behalf. I can remove it anytime.
+                  I understand my Gmail address is stored securely and used <strong>only</strong> as a reply-to address for certificate emails.
                 </Consent>
               </div>
             </>
@@ -277,8 +239,6 @@ export default function AuthModal({ mode, onClose, onSwitchMode }) {
     </div>
   );
 }
-
-// ── Sub-components ─────────────────────────────────────────────────────────────
 
 function Field({ label, error, children }) {
   return (
