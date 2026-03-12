@@ -1,59 +1,38 @@
 /**
  * services/api.js
- * Centralized Axios instance and API call functions.
+ * Using Vercel proxy - BASE_URL is empty so all /api calls go through Vercel
+ * which proxies them to Railway backend (bypasses CORS/DNS issues)
  */
 import axios from "axios";
 
-const BASE_URL = import.meta.env.VITE_API_URL ? import.meta.env.VITE_API_URL : "";
-
 const api = axios.create({
-  baseURL: `${BASE_URL}/api`,
+  baseURL: `/api`,
   timeout: 30000,
-  withCredentials: true,
 });
 
-// Attach token to every request if present
 api.interceptors.request.use((config) => {
   const user = localStorage.getItem("cert_user");
   if (user) {
     try {
       const { token } = JSON.parse(user);
       if (token) config.headers.Authorization = `Bearer ${token}`;
-    } catch (e) {
-      // ignore parse errors
-    }
+    } catch (e) {}
   }
   return config;
 });
 
-// ── Auth ───────────────────────────────────────────────────────────────────────
-export async function registerUser({
-  name,
-  email,
-  password,
-  orgName,
-  senderEmail,
-  senderAppPassword,
-  agreeTerms,
-  agreeData,
-  agreePassword,
-}) {
+export async function registerUser({ name, email, password, orgName, senderEmail, senderAppPassword, agreeTerms, agreeData, agreePassword }) {
   if (!name || !email || !password || !orgName || !senderEmail || !senderAppPassword) {
-    throw new Error("Please fill all required fields (including sender Gmail and app password).");
+    throw new Error("Please fill all required fields.");
   }
   if (!(agreeTerms && agreeData && agreePassword)) {
     throw new Error("Please check all consent boxes to proceed.");
   }
   const { data } = await api.post("/auth/register", {
-    name: String(name).trim(),
-    email: String(email).trim(),
-    password: String(password),
-    org_name: String(orgName).trim(),
-    sender_email: String(senderEmail).trim(),
+    name: String(name).trim(), email: String(email).trim(), password: String(password),
+    org_name: String(orgName).trim(), sender_email: String(senderEmail).trim(),
     sender_app_password: String(senderAppPassword).trim(),
-    agree_terms: !!agreeTerms,
-    agree_data: !!agreeData,
-    agree_password: !!agreePassword,
+    agree_terms: !!agreeTerms, agree_data: !!agreeData, agree_password: !!agreePassword,
   });
   return data;
 }
@@ -63,7 +42,6 @@ export async function loginUser({ email, password }) {
   return data;
 }
 
-// ── Certificate ────────────────────────────────────────────────────────────────
 export async function uploadTemplate(file) {
   const formData = new FormData();
   formData.append("file", file);
@@ -103,10 +81,9 @@ export async function retryFailed(batchId, emailSubject, emailBody) {
 }
 
 export function getZipDownloadUrl(batchId) {
-  return `${BASE_URL}/api/certificates/download-zip/${batchId}`;
+  return `/api/certificates/download-zip/${batchId}`;
 }
 
-// ── Verify certificate (public, no auth needed) ────────────────────────────────
 export async function verifyCertificate(certCode) {
   const { data } = await api.get(`/certificates/verify/${certCode}`);
   return data;
