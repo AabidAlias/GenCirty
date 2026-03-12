@@ -9,14 +9,19 @@ const BASE_URL = import.meta.env.VITE_API_URL ? import.meta.env.VITE_API_URL : "
 const api = axios.create({
   baseURL: `${BASE_URL}/api`,
   timeout: 30000,
+  withCredentials: true,
 });
 
 // Attach token to every request if present
 api.interceptors.request.use((config) => {
   const user = localStorage.getItem("cert_user");
   if (user) {
-    const { token } = JSON.parse(user);
-    if (token) config.headers.Authorization = `Bearer ${token}`;
+    try {
+      const { token } = JSON.parse(user);
+      if (token) config.headers.Authorization = `Bearer ${token}`;
+    } catch (e) {
+      // ignore parse errors
+    }
   }
   return config;
 });
