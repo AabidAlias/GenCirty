@@ -137,7 +137,7 @@ function LegalPage({ title, lastUpdated, children }) {
       {/* Navbar */}
       <nav className="bg-white border-b border-gray-100 px-6 py-4 flex items-center gap-3">
         <RouterLink to="/" className="flex items-center gap-2">
-          <span className="text-xl">🎓</span>
+          <span className="text-xl"></span>
           <span className="font-bold text-red-600">GenCirty</span>
         </RouterLink>
         <span className="text-gray-300 mx-2">|</span>
@@ -176,7 +176,7 @@ function LegalPage({ title, lastUpdated, children }) {
           href="https://www.linkedin.com/in/aabid431/"
           target="_blank"
           rel="noopener noreferrer"
-          className="text-red-400 hover:underline font-semibold"
+          className="text-red-400 hover:underline font-semibold text-xl"
         >
           Aabid Ali
         </a>
