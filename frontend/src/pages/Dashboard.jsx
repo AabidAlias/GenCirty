@@ -149,7 +149,7 @@ export default function Dashboard() {
       {/* Navbar */}
       <header className="bg-white border-b border-gray-100 px-6 py-4 flex items-center justify-between sticky top-0 z-40 shadow-sm">
         <div className="flex items-center gap-2">
-          <span className="text-xl">🎓</span>
+          
           <span className="font-bold text-red-600 text-lg">GenCirty</span>
         </div>
 

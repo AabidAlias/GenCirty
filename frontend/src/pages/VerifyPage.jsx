@@ -31,7 +31,7 @@ export default function VerifyPage() {
 
       {/* Navbar */}
       <nav className="bg-white border-b border-gray-100 px-6 py-4 flex items-center gap-3">
-        <span className="text-xl">🎓</span>
+        
         <span className="font-bold text-red-600">
 GenCirty</span>
         <span className="text-gray-300 mx-2">|</span>
