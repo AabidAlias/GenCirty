@@ -3,6 +3,10 @@
     {
       "source": "/api/:path*",
       "destination": "https://gencirty-api.up.railway.app/api/:path*"
+    },
+    {
+      "source": "/health",
+      "destination": "https://gencirty-api.up.railway.app/health"
     }
   ]
 }
