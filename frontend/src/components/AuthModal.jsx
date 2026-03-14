@@ -46,7 +46,7 @@ export default function AuthModal({ mode, onClose, onSwitchMode }) {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
-      <div className="bg-[#0f0f0f] border border-gray-800 rounded-2xl shadow-2xl w-full max-w-md overflow-hidden" style={{ maxHeight: "92vh", overflowY: "auto" }}>
+      <div className="bg-[#0f0f0f] border border-gray-800 rounded-2xl shadow-2xl w-full max-w-md overflow-hidden" style={{ maxHeight: "92vh", overflowY: "auto", fontFamily: "'DM Sans', sans-serif" }}>
 
         {/* Header */}
         <div className="px-8 py-6 border-b border-gray-900 flex items-center justify-between">
