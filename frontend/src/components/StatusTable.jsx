@@ -1,54 +1,42 @@
 /**
- * components/StatusTable.jsx
- * Shows per-recipient certificate send status.
+ * components/StatusTable.jsx — Dark minimal theme
  */
 const STATUS_STYLES = {
-  sent: "bg-black text-white",
-  failed: "bg-brand-600 text-white",
-  pending: "bg-white text-zinc-900 border border-zinc-300",
+  sent:    "bg-white text-black",
+  failed:  "bg-red-600 text-white",
+  pending: "bg-gray-800 text-gray-400 border border-gray-700",
 };
 
 export default function StatusTable({ records }) {
   if (!records || records.length === 0) return null;
 
   return (
-    <div className="bg-white border border-zinc-200 rounded-xl overflow-hidden shadow-sm">
-      <div className="px-5 py-4 border-b border-zinc-200">
-        <h2 className="text-sm font-extrabold text-zinc-950 uppercase tracking-wider">
-          Recipient Status
-        </h2>
+    <div className="bg-[#0a0a0a] border border-gray-900 rounded-2xl overflow-hidden">
+      <div className="px-5 py-4 border-b border-gray-900">
+        <h2 className="text-xs font-bold text-gray-600 uppercase tracking-widest">Recipient Status</h2>
       </div>
 
       <div className="overflow-x-auto">
         <table className="w-full text-sm">
           <thead>
-            <tr className="border-b border-zinc-200 bg-zinc-50">
-              <th className="text-left px-5 py-3 text-zinc-700 font-semibold">Name</th>
-              <th className="text-left px-5 py-3 text-zinc-700 font-semibold">Email</th>
-              <th className="text-left px-5 py-3 text-zinc-700 font-semibold">Status</th>
-              <th className="text-left px-5 py-3 text-zinc-700 font-semibold">Note</th>
+            <tr className="border-b border-gray-900">
+              <th className="text-left px-5 py-3 text-gray-600 font-semibold text-xs uppercase tracking-wider">Name</th>
+              <th className="text-left px-5 py-3 text-gray-600 font-semibold text-xs uppercase tracking-wider">Email</th>
+              <th className="text-left px-5 py-3 text-gray-600 font-semibold text-xs uppercase tracking-wider">Status</th>
+              <th className="text-left px-5 py-3 text-gray-600 font-semibold text-xs uppercase tracking-wider">Note</th>
             </tr>
           </thead>
           <tbody>
             {records.map((r, i) => (
-              <tr
-                key={r.certificate_id || i}
-                className="border-b border-zinc-200 hover:bg-zinc-50 transition-colors"
-              >
-                <td className="px-5 py-3 text-zinc-950 font-semibold">{r.name}</td>
-                <td className="px-5 py-3 text-zinc-700">{r.email}</td>
+              <tr key={r.certificate_id || i} className="border-b border-gray-900 hover:bg-gray-900/50 transition-colors">
+                <td className="px-5 py-3 text-white font-semibold">{r.name}</td>
+                <td className="px-5 py-3 text-gray-500">{r.email}</td>
                 <td className="px-5 py-3">
-                  <span
-                    className={`text-xs px-2 py-1 rounded-full font-extrabold uppercase tracking-wide ${
-                      STATUS_STYLES[r.status] || "text-zinc-700"
-                    }`}
-                  >
+                  <span className={`text-xs px-2.5 py-1 rounded-full font-bold uppercase tracking-wide ${STATUS_STYLES[r.status] || "text-gray-500"}`}>
                     {r.status}
                   </span>
                 </td>
-                <td className="px-5 py-3 text-xs text-brand-700">
-                  {r.error_message || "—"}
-                </td>
+                <td className="px-5 py-3 text-xs text-red-500">{r.error_message || "—"}</td>
               </tr>
             ))}
           </tbody>

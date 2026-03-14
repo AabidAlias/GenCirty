@@ -8,6 +8,7 @@ import Dashboard from "./pages/Dashboard";
 import VerifyPage from "./pages/VerifyPage";
 import TermsPage from "./pages/TermsPage";
 import PrivacyPage from "./pages/PrivacyPage";
+import SupportButton from "./components/SupportButton";
 
 class ErrorBoundary extends Component {
   constructor(props) { super(props); this.state = { hasError: false, error: null }; }
@@ -58,17 +59,18 @@ function AppRouter() {
   }
 
   // Public pages — always accessible regardless of login
-  if (path === "/verify")  return <VerifyPage />;
-  if (path === "/terms")   return <TermsPage />;
-  if (path === "/privacy") return <PrivacyPage />;
+  if (path === "/verify")  return <><VerifyPage /><SupportButton /></>;
+  if (path === "/terms")   return <><TermsPage /><SupportButton /></>;
+  if (path === "/privacy") return <><PrivacyPage /><SupportButton /></>;
 
   // Auth gate
-  if (user) return <Dashboard />;
-  return <LandingPage />;
+  if (user) return <><Dashboard /><SupportButton /></>;
+  return <><LandingPage /><SupportButton /></>;
 }
 
 export default function App() {
   return (
+    
     <ErrorBoundary>
       <AuthProvider>
         <AppRouter />

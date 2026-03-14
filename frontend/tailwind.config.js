@@ -14,8 +14,8 @@ export default {
         },
       },
       fontFamily: {
-        // Prefer a clean Windows-friendly geometric sans.
-        sans: ["Bahnschrift", "Segoe UI", "system-ui", "sans-serif"],
+        sans: ["'DM Sans'", "'Segoe UI'", "system-ui", "sans-serif"],
+        serif: ["'Playfair Display'", "Georgia", "serif"],
       },
     },
   },
