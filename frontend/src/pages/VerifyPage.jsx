@@ -31,7 +31,7 @@ export default function VerifyPage() {
 
       {/* Navbar */}
       <nav className="px-8 py-5 flex items-center gap-3 border-b border-gray-900">
-       <a href="/" className="font-black text-xl text-white tracking-tight" style={{ fontFamily: "'Playfair Display', Georgia, serif" }}>GenCirty</a>
+       <a href="/" className="font-black text-3xl text-white tracking-tight" style={{ fontFamily: "'Playfair Display', Georgia, serif" }}>GenCirty</a>
         <span className="text-gray-700 mx-1">|</span>
         <span className="text-sm text-gray-600">Certificate Verification</span>
       </nav>

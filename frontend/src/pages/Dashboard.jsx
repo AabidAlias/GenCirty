@@ -28,6 +28,7 @@ export default function Dashboard() {
   const { user, logout, login } = useAuth();
   if (!user) return null;
 
+  const [menuOpen, setMenuOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [batchId, setBatchId] = useState(null);
   const [progress, setProgress] = useState(null);
@@ -110,9 +111,11 @@ export default function Dashboard() {
 
       {/* Navbar */}
       <header className="bg-[#0a0a0a] border-b border-gray-900 px-6 py-4 flex items-center justify-between sticky top-0 z-40">
-        <span className="font-black text-xl text-white tracking-tight" style={{ fontFamily: "'Playfair Display', Georgia, serif" }}>GenCirty</span>
-        <div className="flex items-center gap-3 flex-wrap justify-end">
-          <div className="text-right hidden sm:block">
+        <span className="font-black text-3xl text-white tracking-tight" style={{ fontFamily: "'Playfair Display', Georgia, serif" }}>GenCirty</span>
+
+        {/* Desktop */}
+        <div className="hidden md:flex items-center gap-3">
+          <div className="text-right">
             <p className="text-sm font-semibold text-white">{user?.name || "User"}</p>
             <p className="text-xs text-gray-600">{user?.org_name || ""}</p>
           </div>
@@ -125,7 +128,37 @@ export default function Dashboard() {
             Log Out
           </button>
         </div>
+
+        {/* Mobile — credits + hamburger */}
+        <div className="flex md:hidden items-center gap-2">
+          <CreditsDisplay />
+          <button onClick={() => setMenuOpen(!menuOpen)} className="flex flex-col gap-1.5 p-2">
+            <span className={`block w-5 h-0.5 bg-white transition-all duration-300 ${menuOpen ? "rotate-45 translate-y-2" : ""}`} />
+            <span className={`block w-5 h-0.5 bg-white transition-all duration-300 ${menuOpen ? "opacity-0" : ""}`} />
+            <span className={`block w-5 h-0.5 bg-white transition-all duration-300 ${menuOpen ? "-rotate-45 -translate-y-2" : ""}`} />
+          </button>
+        </div>
       </header>
+
+      {/* Mobile dropdown */}
+      {menuOpen && (
+        <>
+          <div className="fixed inset-0 z-30 bg-black/80 md:hidden" onClick={() => setMenuOpen(false)} />
+          <div className="fixed top-[61px] left-0 right-0 z-40 bg-[#0a0a0a] border-b border-gray-800 px-6 py-5 space-y-3 md:hidden">
+            <div className="pb-3 border-b border-gray-900">
+              <p className="text-sm font-semibold text-white">{user?.name || "User"}</p>
+              <p className="text-xs text-gray-600">{user?.org_name || ""}</p>
+            </div>
+            <SenderSettings />
+            <RouterLink to="/verify" className="block px-3 py-2.5 text-sm font-semibold text-gray-400 border border-gray-800 rounded-xl hover:text-white transition-colors text-center">
+              🔍 Verify Certificate
+            </RouterLink>
+            <button onClick={logout} className="w-full px-3 py-2.5 text-sm font-semibold text-gray-600 border border-gray-800 rounded-xl hover:bg-gray-900 transition-colors">
+              Log Out
+            </button>
+          </div>
+        </>
+      )}
 
       <div className="max-w-6xl mx-auto p-6 space-y-6">
 
