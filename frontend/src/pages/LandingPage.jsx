@@ -3,6 +3,7 @@
  * Added: "How to Use" visual section between hero and features.
  */
 import { useState } from "react";
+import { Helmet } from "react-helmet-async";
 import AuthModal from "../components/AuthModal";
 
 export default function LandingPage() {
@@ -161,6 +162,23 @@ export default function LandingPage() {
 
   return (
     <div className="min-h-screen bg-[#0a0a0a] text-white" style={{ fontFamily: "'Playfair Display', 'Georgia', serif" }}>
+
+      <Helmet>
+        <title>GenCirty — Certificate Automation Platform</title>
+        <meta name="description" content="Send personalized certificates to thousands of recipients in minutes. Upload your template, add recipients via CSV, and let GenCirty generate and email verified certificates automatically." />
+        <meta name="keywords" content="certificate automation, bulk certificate sender, event certificates, online certificate generator, certificate verification, TEDx certificates, college society certificates, webinar certificates" />
+        <link rel="canonical" href="https://gencirty.xyz" />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://gencirty.xyz" />
+        <meta property="og:title" content="GenCirty — Certificates, Automated." />
+        <meta property="og:description" content="Send personalized certificates to thousands of recipients in minutes. Built for event organizers, universities, bootcamps and online courses." />
+        <meta property="og:image" content="https://gencirty.xyz/og-image.png" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="GenCirty — Certificates, Automated." />
+        <meta name="twitter:description" content="Send personalized certificates to thousands of recipients in minutes." />
+        <meta name="twitter:image" content="https://gencirty.xyz/og-image.png" />
+      </Helmet>
+
       <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
 
       {/* ── Navbar ── */}
@@ -266,8 +284,6 @@ export default function LandingPage() {
             <p className="text-red-500 text-xs font-semibold uppercase tracking-[0.3em] mb-4" style={{ fontFamily: "'DM Sans', sans-serif" }}>How it works</p>
             <h2 className="text-4xl md:text-5xl font-black">From signup to sent<br /><span className="text-gray-600">in five steps.</span></h2>
           </div>
-
-          {/* Step tabs */}
           <div className="flex gap-2 mb-10 overflow-x-auto pb-2" style={{ fontFamily: "'DM Sans', sans-serif" }}>
             {steps.map((s, i) => (
               <button key={i} onClick={() => setActiveStep(i)}
@@ -280,24 +296,16 @@ export default function LandingPage() {
               </button>
             ))}
           </div>
-
-          {/* Active step content */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center bg-gray-900/30 border border-gray-800 rounded-3xl p-8">
             <div style={{ fontFamily: "'DM Sans', sans-serif" }}>
               <p className="text-red-500 text-xs font-semibold uppercase tracking-widest mb-3">{steps[activeStep].tag}</p>
               <h3 className="text-3xl font-black text-white mb-4" style={{ fontFamily: "'Playfair Display', serif" }}>{steps[activeStep].title}</h3>
               <p className="text-gray-400 leading-relaxed mb-8">{steps[activeStep].desc}</p>
               <div className="flex items-center gap-3">
-                <button onClick={() => setActiveStep(Math.max(0, activeStep - 1))}
-                  disabled={activeStep === 0}
-                  className="px-4 py-2 text-sm border border-gray-800 text-gray-500 rounded-xl hover:border-gray-600 hover:text-gray-300 disabled:opacity-30 transition-all">
-                  ← Prev
-                </button>
-                <button onClick={() => setActiveStep(Math.min(steps.length - 1, activeStep + 1))}
-                  disabled={activeStep === steps.length - 1}
-                  className="px-4 py-2 text-sm bg-red-600 text-white rounded-xl hover:bg-red-500 disabled:opacity-30 transition-all">
-                  Next →
-                </button>
+                <button onClick={() => setActiveStep(Math.max(0, activeStep - 1))} disabled={activeStep === 0}
+                  className="px-4 py-2 text-sm border border-gray-800 text-gray-500 rounded-xl hover:border-gray-600 hover:text-gray-300 disabled:opacity-30 transition-all">← Prev</button>
+                <button onClick={() => setActiveStep(Math.min(steps.length - 1, activeStep + 1))} disabled={activeStep === steps.length - 1}
+                  className="px-4 py-2 text-sm bg-red-600 text-white rounded-xl hover:bg-red-500 disabled:opacity-30 transition-all">Next →</button>
                 <span className="text-xs text-gray-700 ml-2">{activeStep + 1} / {steps.length}</span>
               </div>
             </div>
