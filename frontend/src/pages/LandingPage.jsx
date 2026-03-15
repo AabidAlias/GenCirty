@@ -209,6 +209,22 @@ export default function LandingPage() {
         </div>
       </section>
 
+      {/* ── Who Uses GenCirty ── */}
+      <section className="py-16 px-6 border-t border-gray-900">
+        <div className="max-w-5xl mx-auto">
+          <p className="text-center text-xs font-semibold text-gray-700 uppercase tracking-[0.3em] mb-10" style={{ fontFamily: "'DM Sans', sans-serif" }}>
+            Built for
+          </p>
+          <div className="flex flex-wrap justify-center gap-3" style={{ fontFamily: "'DM Sans', sans-serif" }}>
+            {["Event Organizers", "Universities", "Webinar Hosts", "Bootcamps", "Online Courses", "College Societies", "TEDx Events", "Workshops"].map((label) => (
+              <span key={label} className="px-5 py-2.5 rounded-full border border-gray-800 text-sm text-gray-500 hover:border-gray-600 hover:text-gray-300 transition-all cursor-default">
+                {label}
+              </span>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* ── Bold quote section ── */}
       <section className="py-32 px-6 border-t border-gray-900">
         <div className="max-w-5xl mx-auto">
@@ -267,13 +283,10 @@ export default function LandingPage() {
 
           {/* Active step content */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center bg-gray-900/30 border border-gray-800 rounded-3xl p-8">
-            {/* Left — text */}
             <div style={{ fontFamily: "'DM Sans', sans-serif" }}>
               <p className="text-red-500 text-xs font-semibold uppercase tracking-widest mb-3">{steps[activeStep].tag}</p>
               <h3 className="text-3xl font-black text-white mb-4" style={{ fontFamily: "'Playfair Display', serif" }}>{steps[activeStep].title}</h3>
               <p className="text-gray-400 leading-relaxed mb-8">{steps[activeStep].desc}</p>
-
-              {/* Step navigation */}
               <div className="flex items-center gap-3">
                 <button onClick={() => setActiveStep(Math.max(0, activeStep - 1))}
                   disabled={activeStep === 0}
@@ -288,8 +301,6 @@ export default function LandingPage() {
                 <span className="text-xs text-gray-700 ml-2">{activeStep + 1} / {steps.length}</span>
               </div>
             </div>
-
-            {/* Right — visual */}
             <div>{steps[activeStep].visual}</div>
           </div>
         </div>
