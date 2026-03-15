@@ -7,6 +7,10 @@
     {
       "source": "/health",
       "destination": "https://gencirty-api.up.railway.app/health"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
     }
   ]
 }
